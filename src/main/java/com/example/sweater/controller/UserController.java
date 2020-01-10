@@ -3,6 +3,7 @@ package com.example.sweater.controller;
 import com.example.sweater.domain.Role;
 import com.example.sweater.domain.User;
 import com.example.sweater.repository.UserRepository;
+import com.example.sweater.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,21 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public String userList(Model model) {
         model.addAttribute("users", userRepository.findAll());
+        return "userList";
+    }
+
+    @GetMapping("/delete/{user}")
+    public String userDelete(@PathVariable User user, Model model) {
+        if(!userService.deleteUser(user.getId())) {
+            model.addAttribute("message", String.format("User %s was not delete", user.getUsername()));
+        }
+        model.addAttribute("message", String.format("User %s was delete", user.getUsername()));
         return "userList";
     }
 

@@ -12,6 +12,8 @@ public class Message {
     private String text;
     private String tag;
 
+    private String filename;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
@@ -24,6 +26,18 @@ public class Message {
         this.author = user;
         this.text = text;
         this.tag = tag;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getAuthorName() {
