@@ -11,16 +11,32 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/main">Messages</a>
-            </li>
             <#if isAdmin>
             <li class="nav-item">
                 <a class="nav-link" href="/user">User list</a>
             </li>
             </#if>
+            <#if name != 'guest'>
+                <li class="nav-item">
+                    <a class="nav-link" href="/main">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user-messages/${currentUserId}">My messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/profile">Profile</a>
+                </li>
+            </#if>
         </ul>
-        <div class="navbar-text mr-3">${name}</div>
-        <#if known><@l.logout/></#if>
+        <div class="navbar-text mr-3">
+            <#if known>
+                ${name}
+            <#else>
+                <a href="/login">${name}</a>
+            </#if>
+        </div>
+        <#if known>
+            <@l.logout/>
+        </#if>
     </div>
 </nav>
